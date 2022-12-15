@@ -20,37 +20,31 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Action</th>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Action</th>
 
-                    </tr>
+                        </tr>
                     </thead>
                     <tfoot>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                    </tr>
+
                     </tfoot>
                     <tbody>
-                    @foreach($variants as $key=>$variant)
-                        <tr>
-                            <td>{{ $key +1 }}</td>
-                            <td>{{ $variant->title }}</td>
-                            <td>{{ nl2br($variant->description) }}</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('product-variant.edit',$variant) }}" class="btn btn-primary">Edit</a>
-                                    <button class="btn btn-danger">delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-
+                        @foreach($variants as $key=>$variant)
+                            <tr>
+                                <td>{{ $key +1 }}</td>
+                                <td>{{ $variant->title }}</td>
+                                <td>{{ nl2br($variant->description) }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('product-variant.edit', $variant) }}" class="btn btn-primary">Edit</a>
+                                        <button class="btn btn-danger">delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
