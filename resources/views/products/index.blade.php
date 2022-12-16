@@ -5,8 +5,6 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
     </div>
-
-
     <div class="card">
         <form action="" method="get" class="card-header">
             <div class="form-row justify-content-between">
@@ -51,31 +49,44 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>T-Shirt <br> Created at : 25-Aug-2020</td>
-                            <td>Quality product in low cost</td>
-                            <td>
-                                <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
+                        @foreach($products as $key => $product)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $product->title }} <br> Created at : {{ date($product->created_at) }}</td>
+                                <td>{{ $product->description }}</td>
+                                <td>
+                                    @foreach($product->productVariantPrices as $productVariant)
+                                        <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
+                                            <dt class="col-sm-3">
+                                                @if(isset($productVariant->productVariantOne->variant))
+                                                    {{ ucfirst($productVariant->productVariantOne->variant) }}
+                                                @endif
+                                                @if(isset($productVariant->productVariantTwo->variant))
+                                                    / {{ ucfirst($productVariant->productVariantTwo->variant) }}
+                                                @endif
+                                                @if(isset($productVariant->productVariantThree->variant))
+                                                    / {{ ucfirst($productVariant->productVariantThree->variant) }}
+                                                @endif
+                                            </dt>
+                                            <dd class="col-sm-9">
+                                                <dl class="row mb-0">
+                                                    <dt class="col-sm-4 pb-0">Price : ${{ $productVariant->price }}</dt>
 
-                                    <dt class="col-sm-3 pb-0">
-                                        SM/ Red/ V-Nick
-                                    </dt>
-                                    <dd class="col-sm-9">
-                                        <dl class="row mb-0">
-                                            <dt class="col-sm-4 pb-0">Price : {{ number_format(200,2) }}</dt>
-                                            <dd class="col-sm-8 pb-0">InStock : {{ number_format(50,2) }}</dd>
+                                                    <dd class="col-sm-8 pb-0">InStock : {{ $productVariant->stock }}</dd>
+                                                </dl>
+                                            </dd>
                                         </dl>
-                                    </dd>
-                                </dl>
-                                <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more</button>
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
-                                </div>
-                            </td>
-                        </tr>
+                                    @endforeach
+
+                                    {{-- <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more</button> --}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

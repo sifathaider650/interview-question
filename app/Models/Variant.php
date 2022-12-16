@@ -12,13 +12,10 @@ class Variant extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)
-                ->using('App\ProductVariant')
-                ->withPivot([
-                    'variant',
-                    'created_by',
-                    'updated_by',
-                ]);
+        return $this->belongsToMany(Product::class,'product_variants','product_id','variant_id')
+            ->withPivot([
+                'variant'
+            ]);
     }
 
 }

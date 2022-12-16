@@ -18,15 +18,16 @@ class Product extends Model
         return $this->hasMany(ProductImage::class,'product_id','id');
     }
 
-    public function variants()
-    {
-        return $this->belongsToMany(Variant::class)
-            ->using('App\ProductVariant')
+    public function variants(){
+        return $this->belongsToMany(Variant::class, 'product_variants','product_id','variant_id')
             ->withPivot([
-                'variant',
-                'created_by',
-                'updated_by',
+                'variant'
             ]);
+    }
+
+    public function productVariantPrices()
+    {
+        return $this->hasMany(ProductVariantPrice::class, 'product_id', 'id');
     }
 
 }
