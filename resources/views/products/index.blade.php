@@ -13,7 +13,13 @@
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="" class="form-control">
-
+                        @foreach($variants as $variant)
+                            <optgroup label="{{ $variant->title }}">
+                                @foreach($variant->productVariants as $productVariant)
+                                    <option value="volvo">{{ ucfirst($productVariant->variant) }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
                     </select>
                 </div>
 
@@ -52,7 +58,7 @@
                         @foreach($products as $key => $product)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $product->title }} <br> Created at : {{ date($product->created_at) }}</td>
+                                <td>{{ $product->title }} <br> Created at : {{ date("Y-m-d",strtotime($product->created_at)) }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td>
                                     @foreach($product->productVariantPrices as $productVariant)
@@ -97,6 +103,11 @@
             <div class="row justify-content-between">
                 <div class="col-md-6">
                     <p>Showing 1 to 10 out of 100</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="row justify-content-end">
+                        {{ $products->links() }}
+                    </div>
                 </div>
 
             </div>
