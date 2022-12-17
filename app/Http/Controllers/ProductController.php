@@ -82,4 +82,30 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function productSearch(Request $request){
+        $title                          = $request->title;
+        $variant                        = $request->variant;
+        $productPriceForm               = $request->price_from;
+        $productPriceTo                 = $request->price_to;
+        $productDate                    = $request->date;
+
+        $products   = Product::whereHas('productVariantPrices', function ($query) use ($productPriceForm, $productPriceTo){
+                $query->whereBetween('product_variant_prices.price',[$productPriceForm, $productPriceTo]);
+            })
+            ->when($title, function($query, $title) {
+                $query->where('title', 'LIKE', '%'.$title.'%');
+            })
+            ->when($productDate, function ($query, $productDate){
+                $query->where('created_at', '<=' ,$productDate );
+            })
+            ->paginate(5);
+
+        $variants = Variant::with('productVariants')->get();
+
+        return view('products.index', [
+            'products' => $products,
+            'variants' => $variants
+        ]);
+    }
 }

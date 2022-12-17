@@ -6,17 +6,19 @@
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
     </div>
     <div class="card">
-        <form action="" method="get" class="card-header">
+        <form class="card-header" id="productFiterForm" action="{{ route('prod.search') }}" method="post" >
+            @csrf
             <div class="form-row justify-content-between">
                 <div class="col-md-2">
                     <input type="text" name="title" placeholder="Product Title" class="form-control">
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="" class="form-control">
+                        <option selected disabled>--Select A Variant</option>
                         @foreach($variants as $variant)
                             <optgroup label="{{ $variant->title }}">
                                 @foreach($variant->productVariants as $productVariant)
-                                    <option value="volvo">{{ ucfirst($productVariant->variant) }}</option>
+                                    <option value="{{ $productVariant->variant }}">{{ ucfirst($productVariant->variant) }}</option>
                                 @endforeach
                             </optgroup>
                         @endforeach
